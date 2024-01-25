@@ -28,7 +28,7 @@ jobs:
         run: curl -OLs https://pecl.php.net/get/${{github.event.inputs.extension}}-${{github.event.inputs.version}}.tgz && 7z x ${{github.event.inputs.extension}}-${{github.event.inputs.version}}.tgz && 7z x -y ${{github.event.inputs.extension}}-${{github.event.inputs.version}}.tar
       - name: Compute virtual inputs
         id: virtuals
-        run: php src/pecl.php ${{matrix.version}} ${{matrix.arch}} ${{matrix.ts}} ${{github.event.inputs.extension}}
+        run: powershell src/pecl.ps1 ${{matrix.version}} ${{matrix.arch}} ${{matrix.ts}} ${{github.event.inputs.extension}}
       - name: Normalize package folder structure
         if: ${{steps.virtuals.outputs.subfolder != ''}}
         run: cd ${{github.event.inputs.extension}}-${{github.event.inputs.version}} && xcopy ${{steps.virtuals.outputs.subfolder}}\* * /s  && rmdir /s /q ${{steps.virtuals.outputs.subfolder}}
