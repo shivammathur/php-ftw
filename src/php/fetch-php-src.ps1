@@ -1,6 +1,8 @@
 param (
-    [Parameter(Mandatory)] $version,
-    [Parameter(Mandatory)] $arch
+    [Parameter(Mandatory)]
+    [string] $version,
+    [Parameter(Mandatory)]
+    [string] $arch
 )
 
 $ErrorActionPreference = "Stop"

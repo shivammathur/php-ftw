@@ -1,8 +1,13 @@
 param (
-    [Parameter(Mandatory)] $version,
-    [Parameter(Mandatory)] $arch,
-    [Parameter(Mandatory)] $ts,
-    [Parameter(Mandatory)] [ValidateSet('nocache', 'opcache')] $opcache
+    [Parameter(Mandatory)]
+    [string] $version,
+    [Parameter(Mandatory)]
+    [string] $arch,
+    [Parameter(Mandatory)]
+    [string] $ts,
+    [Parameter(Mandatory)]
+    [ValidateSet('nocache', 'opcache')]
+    [string] $opcache
 )
 
 $ErrorActionPreference = "Stop"
