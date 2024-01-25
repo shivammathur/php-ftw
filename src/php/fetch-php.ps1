@@ -6,15 +6,10 @@ param (
 
 $ErrorActionPreference = "Stop"
 
-$versions = @{
-    "7.3" = "vc15"
-    "7.4" = "vc15"
-    "8.0" = "vs16"
-    "8.1" = "vs16"
-    "8.2" = "vs16"
-    "8.3" = "vs16"
-}
-$vs = $versions.($version.Substring(0, 3))
+$jsonContent = Get-Content -Path config/vs.json -Raw
+$versions = ConvertFrom-Json -InputObject $jsonContent
+$major_minor = $version.Substring(0, 3)
+$vs=$($versions.$major_minor)
 if (-not $vs) {
     throw "unsupported PHP version"
 }

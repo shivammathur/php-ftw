@@ -5,9 +5,6 @@ on:
       version:
         description: 'PHP version to build'
         required: true
-defaults:
-  run:
-    shell: cmd
 jobs:
   build:
     strategy:
@@ -18,17 +15,22 @@ jobs:
     steps:
       - name: Checkout php-ftw
         uses: actions/checkout@v4
+
       - name: Checkout php-sdk
         uses: actions/checkout@v4
         with:
           repository: 'php/php-sdk-binary-tools'
           path: 'php-sdk'
+
       - name: Install OCI
-        run: powershell src/install-oci.ps1 -arch ${{matrix.arch}}
+        run: powershell src/php/install-oci.ps1 -arch ${{matrix.arch}}
+
       - name: Fetch php-src
-        run: powershell src/fetch-php-src.ps1 -version ${{github.event.inputs.version}} -arch ${{matrix.arch}}
+        run: powershell src/php/fetch-php-src.ps1 -version ${{github.event.inputs.version}} -arch ${{matrix.arch}}
+
       - name: Build php
-        run: powershell src/build.ps1 -version ${{github.event.inputs.version}} -arch ${{matrix.arch}} -ts ${{matrix.ts}}
+        run: powershell src/php/build.ps1 -version ${{github.event.inputs.version}} -arch ${{matrix.arch}} -ts ${{matrix.ts}}
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:

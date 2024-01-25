@@ -5,9 +5,6 @@ on:
       version:
         description: 'PHP version to test'
         required: true
-defaults:
-  run:
-    shell: cmd
 jobs:
   test:
     strategy:
@@ -19,14 +16,18 @@ jobs:
     steps:
       - name: Checkout php-ftw
         uses: actions/checkout@v4
+
       - name: Setup MySQL
         uses: ankane/setup-mysql@v1
         with:
           database: test
+
       - name: Fetch PHP
-        run: powershell src/fetch-php.ps1 -version ${{github.event.inputs.version}} -arch ${{matrix.arch}} -ts ${{matrix.ts}}
+        run: powershell src/php/fetch-php.ps1 -version ${{github.event.inputs.version}} -arch ${{matrix.arch}} -ts ${{matrix.ts}}
+
       - name: Run tests
-        run: powershell src/run-tests.ps1 -version ${{github.event.inputs.version}} -arch ${{matrix.arch}} -ts ${{matrix.ts}} -opcache ${{matrix.opcache}}
+        run: powershell src/php/run-tests.ps1 -version ${{github.event.inputs.version}} -arch ${{matrix.arch}} -ts ${{matrix.ts}} -opcache ${{matrix.opcache}}
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
