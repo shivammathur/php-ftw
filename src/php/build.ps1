@@ -11,7 +11,7 @@ Set-Location "config\php\vs16\$arch\php-$version"
 New-Item "..\obj" -ItemType "directory"
 Copy-Item "..\config.$ts.bat"
 
-$task = "src\php\runner\task-$ts.bat"
+$task = "..\..\..\..\..\src\php\runner\task-$ts.bat"
 
 & "..\..\..\..\..\php-sdk\phpsdk-vs16-$arch.bat" -t $task
 if (-not $?) {
