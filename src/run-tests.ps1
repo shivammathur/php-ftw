@@ -8,7 +8,7 @@ param (
 $ErrorActionPreference = "Stop"
 
 $ini = "$pwd\phpbin\php.ini"
-Copy-Item "php.ini" $ini
+Copy-Item "..\config\php.ini" $ini
 Add-Content $ini "extension_dir=$pwd\phpbin\ext"
 
 if ($opcache -eq "opcache") {
@@ -53,7 +53,7 @@ $Env:PDO_MYSQL_TEST_PASS = ""
 Set-Location "tests"
 
 Remove-Item "tests-to-run.txt" -ErrorAction "Ignore"
-foreach ($line in Get-Content "..\dirs-to-test.txt") {
+foreach ($line in Get-Content "..\config\dirs-to-test.txt") {
     $ttr = Get-ChildItem -Path $line -Filter "*.phpt" -Recurse
     foreach ($t in $ttr) {
         Add-Content "tests-to-run.txt" ($t | Resolve-Path -Relative)

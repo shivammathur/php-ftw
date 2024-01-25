@@ -6,7 +6,7 @@ param (
 
 $ErrorActionPreference = "Stop"
 
-Set-Location "php\vs16\$arch\php-$version"
+Set-Location "config\php\vs16\$arch\php-$version"
 
 New-Item "..\obj" -ItemType "directory"
 Copy-Item "..\config.$ts.bat"
@@ -36,10 +36,10 @@ Add-Content $task "if errorlevel 1 exit 10"
 Add-Content $task "nmake && nmake snap 2>&1"
 Add-Content $task "if errorlevel 1 exit 11"
 
-& "..\..\..\..\php-sdk\phpsdk-vs16-$arch.bat" -t $task
+& "..\..\..\..\..\php-sdk\phpsdk-vs16-$arch.bat" -t $task
 if (-not $?) {
     throw "build failed with errorlevel $LastExitCode"
 }
 
 $artifacts = if ($ts -eq "ts") {"..\obj\Release_TS\php-*.zip"} else {"..\obj\Release\php-*.zip"}
-xcopy $artifacts "..\..\..\..\artifacts\*"
+xcopy $artifacts "..\..\..\..\..\artifacts\*"

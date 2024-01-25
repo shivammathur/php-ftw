@@ -14,7 +14,7 @@ if (!array_key_exists($version, $versions)) {
 }
 file_put_contents(getenv("GITHUB_OUTPUT"), "vs={$versions[$version]}\n", FILE_APPEND);
 
-$ini = parse_ini_file(__DIR__ . "/pecl.ini", true, INI_SCANNER_RAW);
+$ini = parse_ini_file(__DIR__ . "/../config/pecl.ini", true, INI_SCANNER_RAW);
 if (!array_key_exists($extension, $ini)) {
     throw new Exception("Unsupported extension: $extension");
 }
