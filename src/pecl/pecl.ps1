@@ -102,7 +102,10 @@ Function Add-Extensions {
                 throw "Unsupported dependency extension: $Extension"
             }
         }
-        $lines | Set-Content -Path $OutputFile
+        if($lines.Count -gt 0)
+        {
+            $lines | Set-Content -Path $OutputFile
+        }
     }
 }
 
@@ -126,7 +129,7 @@ Function Add-Docs {
     $docs = $xml.SelectNodes("//*[@role='doc']") | ForEach-Object {
         $_.name -replace "/", "\"
     }
-    $docs = $docs -join " "
+    $docs = $docs -join ","
     Add-Content -Value "docs=$docs" -Path $outputFile
 }
 
@@ -144,12 +147,12 @@ Function Add-BuildDir {
 
 $outputFile = if ($env:GITHUB_OUTPUT) { $env:GITHUB_OUTPUT } else { "output.txt" }
 
-$versions = Get-Versions -InputFile 'config\vs.json'
+$versions = Get-Versions -InputFile config\vs.json
 if (-not $versions.PSObject.Properties.Name -contains $Version) {
     throw "Unsupported version: $Version"
 }
 
-$ini = Get-IniData -Path (Join-Path $PSScriptRoot "..\config\pecl.ini")
+$ini = Get-IniData -Path config\pecl.ini
 if (-not $ini.ContainsKey($Extension)) {
     throw "Unsupported extension: $Extension"
 }
