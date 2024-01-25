@@ -15,4 +15,4 @@ if ($version.Contains(".")) {
 7z "x" "php-$version.zip"
 Move-Item "php-src-php-$version" "php-$version-src"
 7z "a" "artifacts\php-$version-src.zip" "php-$version-src"
-Move-Item "php-$version-src" "php/vs16/$arch/php-$version"
+Move-Item "php-$version-src" "config/php/vs16/$arch/php-$version"
